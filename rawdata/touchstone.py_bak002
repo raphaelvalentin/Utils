@@ -1,0 +1,119 @@
+from libarray import *
+from functions import *
+from cmath import rect, pi
+
+from numpy import array
+
+__all__ = ['snp']
+
+class snp(dict):
+    def __init__(self, filename=""):
+        dict.__init__(self)
+        self.filename = filename
+	extension = [c for c in filename.split('.')[-1]]
+	if len(extension)<>3 or extension[0]<>'s' or extension[2]<>'p' :
+	    raise Exception('the filename is not a snp file')
+	self.n = int(extension[1])
+	self['freq'] = array([])
+	for i in xrange(self.n):
+	    for j in xrange(self.n):
+	        self['s%d%d'%(i+1,j+1)] = array([])
+
+
+
+    def read(self):
+
+        with open(self.filename, 'r') as f:
+
+            ### READ HEADER
+	    for line in f:
+	        line= line.strip()
+	        if line[0] == '!':
+	            pass
+	        elif line[0] == '#':
+		    x = line[1:].split()
+		    unitFREQ = 1.0
+		    try:
+		        if x[0][0] == 'G':
+		            unitFREQ =1e9
+		        elif x[0][0] == 'M':
+		            unitFREQ =1e6
+		        elif x[0][0].lower() == 'k':
+		            unitFREQ =1e3
+		    except:
+		        pass
+     	            isMA = False
+		    try:
+		        if x[x.index('S')+1] == 'MA':
+		            isMA = True
+		    except:
+		        pass
+		    self.Z0 = 50.
+		    try:
+		        self.Z0 = float(x[x.index('R')+1])
+		    except:
+		        pass
+	        else:
+                    break
+            
+            # READ DATA
+            data = []
+            if self.n<3:
+                data = [line.split() for line in f]
+            else:
+                while 1:
+                    line = f.readline()
+                    if len(line):
+                        row = line.split()
+                        for i in xrange(self.n-1):
+                            line = f.readline().strip()
+                            row.extend( line.split() )
+                            data.append( row )
+                    else:
+                        break
+        
+        ## FORMAT DATA 
+        data = array(data, dtype=float)  # string to float
+        data = transpose(self.data)     # transpose
+        data[0] *= unitFREQ
+        if isMA:
+            for i in xrange(self.n*self.n):
+                mag = data[i*2+1]
+                data[i*2+2] *= pi/180.
+                data[i*2+1] *= np.cos(data[i*2+2])
+                data[i*2+2] = mag * np.sin(data[i*2+2])
+        if self.n == 2:
+            data[[3,5]] = data[[5,3]]
+            data[[4,6]] = data[[6,4]]
+
+        self.data = data
+        return self
+
+
+    def __getitem__(self, key):
+        if key == 'freq':
+            return self.data[0]
+        elif key[0] == 's':
+            i, j = int(key[1]), int(key[2])
+            if i<=self.n and j<=self.n:
+                sij = np.empty(self.data.shape[:-1], dtype=complex)
+                sij.real = self.data[2*i-1]
+                sij.imag = self.data[2*i]
+                return sij
+            
+
+
+
+               
+		                
+		        
+if __name__=='__main__':
+    x = snp('test.s4p').read()
+    print x.keys()
+    #print x['s11']	
+	
+        
+	    
+	
+
+

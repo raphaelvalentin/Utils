@@ -1,0 +1,109 @@
+from libarray import *
+from functions import *
+from cmath import rect, pi
+
+
+
+__all__ = ['snp']
+
+class snp(dict):
+    def __init__(self, filename=""):
+        dict.__init__(self)
+        self.filename = filename
+	extension = [c for c in filename.split('.')[-1]]
+	if len(extension)<>3 or extension[0]<>'s' or extension[2]<>'p' :
+	    raise Exception('the filename is not a snp file')
+	self.n = int(extension[1])
+	self['freq'] = array([])
+	for i in xrange(self.n):
+	    for j in xrange(self.n):
+	        self['s%d%d'%(i+1,j+1)] = array([])
+    def read(self):
+        with open(self.filename, 'r') as f:
+	    while 1:
+	        line = f.readline()
+	        if line=='': break
+	        line= line.strip()
+	        data = {}
+	        row = [0.0 for i in xrange(self.n*self.n*2+1)]
+	        if line[0] == '!':
+	            pass
+	        elif line[0] == '#':
+		    x = line[1:].split()
+		    unitFREQ = 1.0
+		    try:
+		        if x[0][0] == 'G':
+		            unitFREQ =1e9
+		        elif x[0][0] == 'M':
+		            unitFREQ =1e6
+		        elif x[0][0].lower() == 'k':
+		            unitFREQ =1e3
+		    except:
+		        pass
+     	            isMA = False
+		    try:
+		        if x[x.index('S')+1] == 'MA':
+		            isMA = True
+		    except:
+		        pass
+		    self.Z0 = 50.
+		    try:
+		        self.Z0 = float(x[x.index('R')+1])
+		    except:
+		        pass
+	        else:
+		    if self.n==1:
+		        row = [float(x) for x in line.split()]
+		        self['freq'].append(row[0]*unitFREQ)
+		        if isMA:
+		            self['s11'].append( rect(row[1], row[2]/180.*pi) )
+                        else:
+		            self['s11'].append( complex(row[1], row[2]) )
+			    
+		    elif self.n==2:
+		        row = [float(x) for x in line.split()]
+		        self['freq'].append(row[0]*unitFREQ)
+		        if isMA:
+		            self['s11'].append( rect(row[1], row[2]/180.*pi) )
+		            self['s21'].append( rect(row[3], row[4]/180.*pi) )
+		            self['s12'].append( rect(row[5], row[6]/180.*pi) )
+		            self['s22'].append( rect(row[7], row[8]/180.*pi) )
+                        else:
+		            self['s11'].append( complex(row[1], row[2]) )
+		            self['s21'].append( complex(row[3], row[4]) )
+		            self['s12'].append( complex(row[5], row[6]) )
+		            self['s22'].append( complex(row[7], row[8]) )
+			    
+		    else:
+		        print 'Warning: please check when more than 2 ports'
+			
+		        values = [float(x) for x in line.split()]
+                        index = len(values)
+		        row[:index] = values
+		        for i in xrange(self.n-1):
+		            line = f.readline()
+		            line = line.strip()
+		            for x in line.split():
+		                row[index] = float(x)
+			        index += 1
+			
+		        self['freq'].append(row[0]*unitFREQ)
+		        k = 1
+		        for i in xrange(self.n):
+		            for j in xrange(self.n):
+			         if isMA:
+			             self['s%d%d'%(i+1, j+1)].append( rect(row[k], row[k+1]/180.*pi) )
+
+		                 else:
+			             self['s%d%d'%(i+1, j+1)].append( complex(row[k], row[k+1]) )
+		                 k += 2
+        return self		        
+		                
+		        
+if __name__=='__main__':
+    for i in xrange(1000):
+        x = snp('top1.s2p').read()
+	    
+	
+
+

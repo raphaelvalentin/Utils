@@ -1,0 +1,111 @@
+from numpy import array, reshape, transpose, cos, sin, empty, pi, asfarray, tan
+
+__all__ = ['snp']
+
+class snp(object):
+    def __init__(self, filename=""):
+        self.filename = filename
+	extension = [c for c in filename.split('.')[-1]]
+	if len(extension)<>3 or extension[0]<>'s' or extension[2]<>'p' :
+	    raise Exception('the filename is not a snp file')
+	self.n = int(extension[1])
+
+    def read(self):
+
+        with open(self.filename) as f:
+
+            ### READ HEADER
+	    while 1:
+                pos = f.tell()
+                line = f.readline()
+	        line= line.strip()
+	        if line[0] == '!':
+	            pass
+	        elif line[0] == '#':
+		    x = line[1:].split()
+		    unitFREQ = 1.0
+		    try:
+		        if x[0][0] == 'G':
+		            unitFREQ =1e9
+		        elif x[0][0] == 'M':
+		            unitFREQ =1e6
+		        elif x[0][0].lower() == 'k':
+		            unitFREQ =1e3
+		    except:
+		        pass
+     	            isMA = False
+		    try:
+		        if x[x.index('S')+1] == 'MA':
+		            isMA = True
+		    except:
+		        pass
+		    self.Z0 = 50.
+		    try:
+		        self.Z0 = float(x[x.index('R')+1])
+		    except:
+		        pass
+	        else:
+                    ### READ DATA 
+                    f.seek(pos)
+                    break
+
+        # FUTURE :: read file, split and float recasting (split combined with recasting must be more efficient) and maybe no need reshape/transpose
+        # data = numpy.loadtxt(f)
+
+
+        ### FORMAT DATA 
+            data = f.read().split()
+        data = asfarray(data)  # string to float :: do the recasting by numpy (fastest)
+        n = 2*self.n**2+1
+        m = len(data)/n
+        self.nrow = m
+        try:
+            data = reshape(data, (m, n)) # virtual 
+            data = transpose(data)  # transpose, virtual
+        except:
+            raise Exception('the file has not correct formatting')
+
+        data[0] *= unitFREQ
+        if isMA: # convert to complex
+            for i in xrange(self.n*self.n):
+                data[i*2+2] *= pi/180.
+                data[i*2+1] *= cos(data[i*2+2])
+                data[i*2+2] = data[i*2+1] * tan(data[i*2+2])
+
+        if self.n == 2:  # s12 <-> s21 # future :: precompute mapping of keys sij <-> i, i+1 is better solution
+            data[[3,5]] = data[[5,3]]
+            data[[4,6]] = data[[6,4]]
+
+        self.data = data
+        
+        ### CREATION KEYS
+        self._keys = ['freq']
+        self._keys.extend( ['s%d%d'%(i,j) for i in xrange(1, self.n+1) for j in xrange(1, self.n+1)] )
+
+
+
+        return self
+
+    def keys(self):
+        return self._keys
+
+    def __getitem__(self, key):
+        if key in self._keys:
+            if key == 'freq':
+                return self.data[0]
+            elif key[0] == 's':
+                sij = empty(self.nrow, dtype=complex)
+                i, j = int(key[1]), int(key[2])
+                sij.real = self.data[4*i + 2*j - 5]
+                sij.imag = self.data[4*i + 2*j - 4]
+                return sij
+            
+
+
+		        
+if __name__=='__main__':
+    for i in xrange(5):
+        x = snp('top1.s2p').read()
+    print x['s22']	
+
+

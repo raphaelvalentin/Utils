@@ -1,0 +1,8 @@
+::: install :::
+python setup.py install
+
+::: clean  package :::
+python setup.py clean
+
+
+
