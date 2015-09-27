@@ -256,8 +256,8 @@ class Parameters(Instance):
                     if c in ('/', '*', '+', '-'):
                         lines[-1] = line[:Parameters.__maxchar_per_line__+i] + c
                         break
-                lines.append('       '+line[Parameters.__maxchar_per_line__+i+1:])
-        return '\t\\\n{indent}'.format(indent=Parameters.__indent__).join(lines)
+                lines.append('      '+line[Parameters.__maxchar_per_line__+i+1:])
+        return '\n+{indent}'.format(indent=Parameters.__indent__).join(lines)
 
 
 
