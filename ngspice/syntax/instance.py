@@ -46,7 +46,7 @@ class Device(Instance):
         self['nodes'] = nodes
         self['model'] = model
 	for k, v in parameters.iteritems():
-	    if isinstance(v, str):
+	    if not isinstance(v, (float, int)):
 	        parameters[k] = "{%s}"%v
       	self.update(parameters)
     def __str__(self):
@@ -68,12 +68,12 @@ class Resistor(Instance):
     def __init__(self, name='R1', nodes=('in', 'out'), r=100, **parameters):
         self['name'] = name
         self['nodes'] = nodes
-	if isinstance(r, str):
+	if not isinstance(r, (float, int)):
 	    self['r'] = "{%s}"%r
 	else:
 	    self['r'] = r
 	for k, v in parameters.iteritems():
-	    if isinstance(v, str):
+	    if not isinstance(v, (float, int)):
 	        parameters[k] = "{%s}"%v
       	self.update(parameters)
     def __str__(self):
@@ -95,12 +95,12 @@ class Inductor(Instance):
     def __init__(self, name='L1', nodes=('in', 'out'), l=1e-9, **parameters):
         self['name'] = name
         self['nodes'] = nodes
-	if isinstance(l, str):
+	if not isinstance(l, (float, int)):
 	    self['l'] = "{%s}"%l
 	else:
 	    self['l'] = l
 	for k, v in parameters.iteritems():
-	    if isinstance(v, str):
+	    if not isinstance(v, (float, int)):
 	        parameters[k] = "{%s}"%v
       	self.update(parameters)
     def __str__(self):
@@ -121,7 +121,7 @@ class MutualInductor(Device):
     __indent__ = ""
     def __init__(self, name='K1', coupling=0.5, ind1='l1', ind2='l2'):
         self['name'] = name
-	if isinstance(coupling, str):
+	if not isinstance(coupling, (float, int)):
 	    self['coupling'] = "{%s}"%coupling
 	else:
 	    self['coupling'] = coupling
@@ -144,12 +144,12 @@ class Capacitor(Instance):
     def __init__(self, name='C1', nodes=('in', 'out'), c=1e-12, **parameters):
         self['name'] = name
         self['nodes'] = nodes
-	if isinstance(c, str):
+	if not isinstance(c, (float, int)):
 	    self['c'] = "{%s}"%c
 	else:
 	    self['c'] = c
 	for k, v in parameters.iteritems():
-	    if isinstance(v, str):
+	    if not isinstance(v, (float, int)):
 	        parameters[k] = "{%s}"%v
       	self.update(parameters)
     def __str__(self):
@@ -251,9 +251,10 @@ class Parameters(Instance):
             lines[-1] += elt.replace(' ', '')
             sumchar  = len(lines[-1])
             if sumchar > Parameters.__maxchar_per_line__:
-                for i, c in enumerate( lines[-1][Parameters.__maxchar_per_line__:]):
+                _line = lines[-1][Parameters.__maxchar_per_line__:]
+                for i, c in enumerate( _line ):
                     line = lines[-1]
-                    if c in ('/', '*', '+', '-'):
+                    if c in ('/', '*', '+', '-') and _line[i-1:i+1]!='e+' and _line[i-1:i+1]!='E+' and _line[i-1:i+1]!='e-' and _line[i-1:i+1]!='E-':
                         lines[-1] = line[:Parameters.__maxchar_per_line__+i] + c
                         break
                 lines.append('      '+line[Parameters.__maxchar_per_line__+i+1:])
