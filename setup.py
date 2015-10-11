@@ -4,7 +4,7 @@ from distutils.extension import Extension
 
 setup(
     name = "xytech-utils-collection",
-    version = "0.0.1",
+    version = "0.0.2",
     author = "Raphael Valentin",
     author_email = "raphael@xytech-consulting.com",
     description = ("suite of utility tools."),

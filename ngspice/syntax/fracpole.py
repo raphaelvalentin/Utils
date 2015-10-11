@@ -41,3 +41,5 @@ class Fracpole(Netlist):
                                       nodes=('%d'%(i+2), '%d'%(self.order+2)), 
         	                      l='l/%d'%(4*(i+1)-1)) )
         self.append (Subckt(name=self.orderame, nodes=('1', '%d'%(self.order+2)), childs=subckt1, **param))
+
+

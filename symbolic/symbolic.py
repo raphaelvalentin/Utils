@@ -2,12 +2,12 @@
 
 from __future__ import division
 
-__all__ = ['Symbol']
+__all__ = ['Symbol', 'sqrt', 'cos', 'sin', 'tan', 'exp', 'atan', 'log10', 'log']
 
 class Symbol(str):
     spacing = 0
 
-    def __init__(self, *expr):
+    def __init__(self, expr):
         self.expr = expr
         self.bracket = False
 
@@ -16,11 +16,11 @@ class Symbol(str):
 
     def __add__(self, obj):
         if isinstance(obj, Symbol) and self.expr == obj.expr:
-            return Symbol('*', 2.0, self)
-        return Symbol('+', self, obj)
+            return Symbol(('*', 2.0, self))
+        return Symbol(('+', self, obj))
 
     def __radd__(self, obj):
-        return Symbol('+', obj, self)
+        return Symbol(('+', obj, self))
 
     def __mul__(self, obj):
         if isinstance(obj, (float, int)) and obj==1.0:
@@ -31,7 +31,7 @@ class Symbol(str):
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-'): 
             obj.setBracket()
-        return Symbol('*', self, obj)
+        return Symbol(('*', self, obj))
 
     def __rmul__(self, obj):
         if isinstance(obj, (float, int)) and obj==1.0:
@@ -42,7 +42,7 @@ class Symbol(str):
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-'): 
             obj.setBracket()
-        return Symbol('*', obj, self)
+        return Symbol(('*', obj, self))
 
     def __div__(self, obj):
         if isinstance(obj, (float, int)) and obj==1.0:
@@ -56,7 +56,7 @@ class Symbol(str):
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-', '*', '/'): 
             obj.setBracket()
-        return Symbol('/', self, obj)
+        return Symbol(('/', self, obj))
 
     def __rdiv__(self, obj):
         if isinstance(obj, Symbol) and self.expr == obj.expr:
@@ -67,29 +67,29 @@ class Symbol(str):
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-'): 
             obj.setBracket()
-        return Symbol('/', obj, self)
+        return Symbol(('/', obj, self))
 
     def __sub__(self, obj):
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-'): 
             obj.setBracket()
-        return Symbol('-', self, obj)
+        return Symbol(('-', self, obj))
 
     def __rsub__(self, obj):
         if len(self.expr) in (2, 3) and self.expr[0] in ('+', '-'): 
             self.setBracket()
-        return Symbol('-', obj, self)
+        return Symbol(('-', obj, self))
 
     def __neg__(self):
         if len(self.expr) == 2 and self.expr[0] in ('+', '-'): 
             if self.expr[0] == '+':
-                self.expr = tuple(['-', Symbol('-', self.expr[1])])
+                self.expr = tuple(['-', Symbol(('-', self.expr[1]))])
             elif self.expr[0] == '-':
-                self.expr = tuple(['+', Symbol('-', self.expr[1])])
+                self.expr = tuple(['+', Symbol(('-', self.expr[1]))])
         elif len(self.expr) == 3 and self.expr[0] in ('+', '-'): 
             if self.expr[0] == '+':
-                self.expr = tuple(['-', Symbol('-', self.expr[1]), self.expr[2]])
+                self.expr = tuple(['-', Symbol(('-', self.expr[1]), self.expr[2])])
             elif self.expr[0] == '-':
-                self.expr = tuple(['+', Symbol('-', self.expr[1]), self.expr[2]])
+                self.expr = tuple(['+', Symbol(('-', self.expr[1]), self.expr[2])])
         return self
 
     def __pos__(self):
@@ -104,14 +104,14 @@ class Symbol(str):
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-', '*', '/', '**'): 
             obj.setBracket()
-        return Symbol('**', self, obj)
+        return Symbol(('**', self, obj))
 
     def __rpow__(self, obj):
         if len(self.expr) in (2, 3) and self.expr[0] in ('+', '-', '*', '/', '**'): 
             self.setBracket()
         if isinstance(obj, Symbol) and len(obj.expr) in (2, 3) and obj.expr[0] in ('+', '-', '*', '/', '**'): 
             obj.setBracket()
-        return Symbol('**', obj, self)
+        return Symbol(('**', obj, self))
 
     def __str__(self):
 
@@ -136,6 +136,48 @@ class Symbol(str):
     def __repr__(self):
         return self.__str__()
 
+
+
+import math    
+def sqrt(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('sqrt({a})'.format(a=obj))
+    return math.sqrt(obj)
+
+def cos(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('cos({a})'.format(a=obj))
+    return math.cos(obj)
+
+def sin(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('sin({a})'.format(a=obj))
+    return math.sin(obj)
+
+def tan(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('tan({a})'.format(a=obj))
+    return math.tan(obj)
+
+def exp(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('exp({a})'.format(a=obj))
+    return math.exp(obj)
+
+def atan(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('atan({a})'.format(a=obj))
+    return math.atan(obj)
+
+def log10(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('log10({a})'.format(a=obj))
+    return math.atan(obj)
+
+def log(obj):
+    if isinstance(obj, Symbol):
+        return Symbol('log({a})'.format(a=obj))
+    return math.atan(obj)
 
    
 if __name__ == '__main__': 
@@ -183,6 +225,8 @@ if __name__ == '__main__':
     
     
     def test(expr, i):
+
+        from symbolic import Symbol
     
         x = Symbol('x')
         y = Symbol('y')
