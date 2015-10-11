@@ -131,6 +131,8 @@ class Symbol(str):
                 s = "(%s%s%s%s%s)" % (str(a),' '*Symbol.spacing, op,' '*Symbol.spacing,str(b))
             else:
                 s = "%s%s%s%s%s" % (str(a),' '*Symbol.spacing, op,' '*Symbol.spacing,str(b))
+	else:
+	    s = str(self.expr)
         return s
 
     def __repr__(self):
