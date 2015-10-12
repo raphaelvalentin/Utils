@@ -452,8 +452,9 @@ class Port(Netlist):
         self.nodes = nodes
 	subckt1 = []
         subckt1.append( Resistor(name='R1', nodes=('v', '3'), r='50' ))
-        subckt1.append( Vsource(name='Vsrc', nodes=('3', '2'), dc=0, ac=1))
+        subckt1.append( Vsource(name='Vsrc', nodes=('3', '4'), dc=0, ac=1))
         subckt1.append( Vsource(name='V', nodes=('1', 'v'), dc=0, ac=0))
+        subckt1.append( Vsource(name='Vm', nodes=('4', '2'), dc=0, ac=0))
         self.append( Subckt(name=name.lower(), nodes=('1', '2'), childs=subckt1) )
 	self.append( Device(name='x%s'%name, model=name.lower(), nodes=nodes) )
 

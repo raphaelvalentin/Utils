@@ -1,8 +1,8 @@
 """ primitives
 """
 from time import time
-from exception import *
-from function import flatten
+#from exception import *
+from functions.science import flatten
 import os
 from ngspice.syntax import *
 from ngspice import simulator

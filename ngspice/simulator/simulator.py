@@ -68,14 +68,14 @@ class ngspice(object):
  
         # check error in stdout
 	if 'error' in stdout:
-	    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], log))
+	    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], self.__parameters__['log']))
 
         # check error in log file
         if self.__parameters__['log']:
   	    with open(os.path.join(self.__parameters__['path'], self.__parameters__['log'])) as f:
 	        stdlog = f.read().lower()
                 if 'error' in stdlog:
-                    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], log))
+                    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], self.__parameters__['log']))
  
         if self.__parameters__['verbose']: 
 	    print '** NgSpice  completes the simulation in {time:.2f}s.'.format(time=(end-start))
@@ -85,7 +85,7 @@ class ngspice(object):
             for pattern in self.netlist.getRawFiles():
 	        outfile = os.path.join(self.__parameters__['path'], pattern)
 	        if not os.path.isfile(outfile):
-		    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], log))
+		    raise Exception("NgSpice was terminated due to a fatal error. \n           Please check the logfile : %s"%os.path.join(self.__parameters__['path'], self.__parameters__['log']))
                 self.raw[pattern] = rawspice(outfile).read()
             if hasattr(self.netlist, 'postSimulation'):
 	        self.netlist.postSimulation(self)

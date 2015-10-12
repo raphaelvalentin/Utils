@@ -1,5 +1,5 @@
 from ngspice.syntax import *
-from function import flatten
+from functions.science import flatten
 from rawdata import touchstone
 from interpolate import interp1d        
 
@@ -64,6 +64,7 @@ class Nport(Netlist):
 	            row.append( xsij )
 		else:
 	            row.append( self.data['s%d%d'%(i+1,j+1)][0] )
+                    freq = self.data['freq'][0]
 	    x.append(row)
 
 	self._ivcvs = []
@@ -73,7 +74,7 @@ class Nport(Netlist):
 	    n2 = [newnode() for _i in xrange(len(nodes)/2)] + [nodes[1]]
 	    self.append( Resistor(name=newname('r'), nodes=(n1[i], n2[0]), r=100) )
 	    for j in xrange(len(nodes)/2):
-	        self.append( VCVSx(nodes=(n2[j], n2[j+1], n1[j], nodes[-1]), gain=x[i][j]) )
+	        self.append( VCVSx(nodes=(n2[j], n2[j+1], n1[j], nodes[-1]), gain=x[i][j], freq=freq) )
 		self._ivcvs.append( len(self)-1 )
     def alter(self, freq):
 	x = []
@@ -91,4 +92,55 @@ class Nport(Netlist):
 	    netlist.append( self[k].alter(y[i], freq) )
         return netlist
     
+class Nport1(Netlist):
+    # http://analog-innovation.com/CreateS-ParameterSubcircuitsforSpice.pdf
+    __name__ = "nport"
+    __type__ = "instance"
+    def __init__(self, name='nport1', nodes=('1', '0', '2', '0'), file="", freq=None):
+	self.name = name
+        self.nodes = nodes
+	self.file = file
+	self.data = touchstone.snp(self.file).read()
+	x = []
+        if freq:
+	    for i in xrange(len(nodes)/2):
+                row = []
+                for j in xrange(len(nodes)/2):
+	            freqs = self.data['freq']
+		    sij = self.data['s%d%d'%(i+1,j+1)]
+		    xsij = interp1d(freqs, sij)(freq)
+	            row.append( xsij )
+	        x.append(row)
+        else:
+ 	    for i in xrange(len(nodes)/2):
+                row = []
+                for j in xrange(len(nodes)/2):
+	            row.append( self.data['s%d%d'%(i+1,j+1)][0] )
+                    freq = self.data['freq'][0]
+	        x.append(row)
+          
+	self._ivcvs = []
+	n1 = [newnode() for i in xrange(len(nodes)/2)]
+	for i in xrange(len(nodes)/2):
+	    self.append( Resistor(name=newname('r'), nodes=(nodes[i*2], n1[i]), r=-50) )	
+	    n2 = [newnode() for _i in xrange(len(nodes)/2)] + [nodes[1]]
+	    self.append( Resistor(name=newname('r'), nodes=(n1[i], n2[0]), r=100) )
+	    for j in xrange(len(nodes)/2):
+	        self.append( VCVSx(nodes=(n2[j], n2[j+1], n1[j], nodes[-1]), gain=x[i][j], freq=freq) )
+		self._ivcvs.append( len(self)-1 )
+    def alter(self, freq):
+	y = []
+        n = len(self.nodes)/2
+        freqs = self.data['freq']
+	for i in xrange(n):
+	    for j in xrange(n):
+		sij = self.data['s%d%d'%(i+1,j+1)]
+		xsij = interp1d(freqs, sij)(freq)
+	        y.append( xsij )
+        netlist = Netlist()
+        for k, yi in zip(self._ivcvs, y):
+	    netlist.extend( self[k].alter(yi, freq) )
+        return netlist
+    
+   
         

@@ -1,11 +1,11 @@
-from exception import *
 import os
 from ngspice.syntax import Instance, Netlist
 from ngspice.syntax import *
 
 from string import *
 from libarray import *
-from function import *
+#from function import *
+from functions.rf.twoport import *
 
 __all__ = ['Ac', 'Dc', 'Op', 'Sp', 'Sweep']
 
@@ -108,6 +108,7 @@ class Sp(Instance):
 	exprs = []
 	for port in ports:
 	    exprs.append( 'x{port}.v'.format(port=port) )
+	    exprs.append( 'x{port}.4'.format(port=port) )
 	    exprs.append( 'v.x{port}.v#branch'.format(port=port) )
 	netlist = Netlist()
 	for i, porti in enumerate(ports):
@@ -139,10 +140,10 @@ class Sp(Instance):
 	for i, porti in enumerate(ports):
 	    filename = '{name}.ac{i}.ac'.format(name=name, i=i)
 	    ac = cir.raw[filename]
-	    vi = ac['x{port}.v'.format(port=porti)]
+	    vi = ac['x{port}.v'.format(port=porti)]-ac['x{port}.4'.format(port=porti)]
 	    ii = -ac['i(v.x{port}.v)'.format(port=porti)]
 	    for j, portj in enumerate(ports):
-	        vj = ac['x{port}.v'.format(port=portj)]
+	        vj = ac['x{port}.v'.format(port=portj)]-ac['x{port}.4'.format(port=portj)]
 		ij = -ac['i(v.x{port}.v)'.format(port=portj)]
 		Sji = (vj-50.*ij)/(vi+50.*ii)
 		cir.raw[sp1]['s{}{}'.format(j+1, i+1)] = Sji
