@@ -23,7 +23,7 @@ class ngspice(object):
         tempfile.tempdir = TMP
 
         # clean history
-        removedirs(*ngspice.__history__[:-MAX_HISTORY])
+        rm(*ngspice.__history__[:-MAX_HISTORY])
 
         # make dir and netlist
         self.__parameters__['path'] = parameters.get('path', tempfile.mkdtemp(prefix=PREFIX, suffix='/'))

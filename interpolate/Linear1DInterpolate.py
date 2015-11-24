@@ -30,7 +30,7 @@ def interp1d(x, y, kind='linear'):
 
 
 try:
-    from fastfunctions import nearest1, nearest2, nearest3
+    from fast import nearest1, nearest2, nearest3
     def interp1d(x, y, kind='linear'):
         def nearest(x0):
             i0 = nearest1(x, x0)

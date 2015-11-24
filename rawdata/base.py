@@ -1,6 +1,7 @@
 from libarray import *
 from functions import *
 import sys
+from collections import OrderedDict
 
 __all__ = ['base']
 
@@ -167,19 +168,24 @@ class base(list):
 		    if isinstance(value, list):
 		        nkeys += 1
 		if nkeys>0:
-                    buf.append(" #")
+                    buf.append("#")
                 l = 0
-                for key, value in self[i].iteritems():
-                    if isinstance(value, list):
-                        buf.append("\"{key}\"\t".format(key=key.strip()))
-                        l = len(value)
+                for _i, (key, value) in enumerate(self[i].iteritems()):
+                    if _i==0:
+                        if isinstance(value, list):
+                            buf.append("\"{key}\"\t".format(key=key.strip()))
+                            l = len(value)
+                    else:
+                        if isinstance(value, list):
+                            buf.append("\"{key}\"\t".format(key=key.strip()).rjust(13))
+                            l = len(value)
 		if nkeys>0:
                     buf.append('\n')
                 for j in xrange(l):
-                    g.write(" ")
+                    #g.write(" ")
                     for key, value in self[i].iteritems():
                         if isinstance(value, list):
-                            buf.append("{value}\t".format(value=value[j]))
+                            buf.append("{value:<13.6e}\t".format(value=value[j].real))
                     buf.append('\n')
                 buf.append('END_DB\n\n')
             except:

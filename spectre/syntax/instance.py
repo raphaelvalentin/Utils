@@ -1,7 +1,6 @@
 import os
 from spectre.syntax import *
 
-
 class Device(Instance):
     __name__ = "device"
     __type__ = "instance"
@@ -22,14 +21,12 @@ class Device(Instance):
 					                             if k not in ('name', 'nodes', 'model') and k[0]<>'_']) 
 					 })
 
-
 class Resistor(Device):
     __name__ = "resistor"
     __type__ = "instance"
     __indent__ = ""
     def __init__(self, name='R1', nodes=('in', 'out'), r=100, **parameters):
 	Device.__init__(self, name=name, nodes=nodes, model='resistor', r=r, **parameters)
-
 
 class Inductor(Device):
     __name__ = "inductor"
@@ -62,14 +59,12 @@ class MutualInductor(Device):
 							    	             if not k in ('name',)]) 
 					     })
 
-
 class Capacitor(Device):
     __name__ = "capacitor"
     __type__ = "instance"
     __indent__ = ""
     def __init__(self, name='C1', nodes=('in', 'out'), c=1e-12, **parameters):
 	Device.__init__(self, name=name, nodes=nodes, model='capacitor', c=c, **parameters)
-
 
 class Vsource(Instance):
     __name__ = "vsource"
@@ -88,7 +83,6 @@ class Vsource(Instance):
 					                             for k, v in self.iteritems() \
 								     if not k in ('name', 'nodes')]) 
 					 })
-					 
 
 class Isource(Instance):
     __name__ = "isource"
@@ -107,7 +101,6 @@ class Isource(Instance):
 					                             for k, v in self.iteritems() \
 								     if not k in ('name', 'nodes')]) 
 					 })
-
 
 class Port(Instance):
     __type__ = "instance"
@@ -129,7 +122,6 @@ class Port(Instance):
 					                             for k, v in self.iteritems() \
 								     if not k in ('name', 'nodes')]) 
 					 })
-
 
 class Vcvs(Instance):
     __name__ = "vcvs"
@@ -167,7 +159,6 @@ class Cccs(Instance):
 								     if not k in ('name', 'nodes')]) 
 					 })
 
-
 class Options(Instance):
     __name__ = "options"
     __type__ = "instance"
@@ -188,7 +179,6 @@ class Options(Instance):
 					                             for key, value in self.iteritems() \
 								     if not key in ('name',)]) })
 
-
 class Save(Instance):
     __type__ = "instance"
     __name__ = "save"
@@ -202,7 +192,6 @@ class Save(Instance):
 	                                                             for key, value in self.iteritems() \
 								     if not key in ('name',)]) })
 
-        
 class Parameters(Instance):
     __type__ = "instance"
     __name__ = "parameters"
@@ -274,7 +263,7 @@ class Include(Instance):
     def __str__(self):
         library = os.path.join(self['path'].strip(), self['library'].strip())
         if not os.path.isfile(library):
-            raise exception.Error('Library %s does not exist' % library)        
+            raise Exception('Library \'%s\' does not exist' % library)        
         return self.__pattern__.format(**{ 'library': library,
 	                                   '**parameters': " ".join(["%s=%s" % (k, v) \
 					                             for k, v in self.iteritems() \
@@ -309,7 +298,6 @@ class Comment(Instance):
     def __str__(self):
         return self.__pattern__.format(**{ 'indent':self.__indent__, '**parameters': " ".join([v for k, v in self.iteritems() if not k in ('name',)]) })
 
-           
 class Section(Instance):
     __type__ = "instance"
     __name__ = "section"
@@ -323,7 +311,6 @@ class Section(Instance):
 	                                   'section':  "\n".join([str(elt) for elt in self['section']])
 					 })
 
-           
 class Statistic(Instance):
     __type__ = "instance"
     __name__ = "statistics"
@@ -333,7 +320,6 @@ class Statistic(Instance):
 	self['statistics'] = statistics
     def __str__(self):
         return self.__pattern__.format(**{ 'statistics':  "\n".join([str(elt) for elt in self['statistics']])})
-
 
 class Mismatch(Instance):
     __type__ = "instance"
@@ -349,7 +335,6 @@ class Mismatch(Instance):
 	mismatch += "}"
         return self.__pattern__.format(**{ 'mismatch': mismatch,
 					 })
-	
 
 class Process(Instance):
     __type__ = "instance"
@@ -365,7 +350,6 @@ class Process(Instance):
 	process += "}"
         return self.__pattern__.format(**{ 'process': process,
 					 })
-	
 
 class Vary(Instance):
     __type__ = "instance"
@@ -379,7 +363,6 @@ class Vary(Instance):
         return self.__pattern__.format(**{ 'name':self['name'], 
 	                                   '**vary': " ".join(['{key}={value}'.format(key=str(key), value=str(value)) for key, value in self.iteritems() if not key in ('name',)]) 
 					})
-	
 
 class Title(Instance):
     __type__ = "instance"
@@ -391,7 +374,6 @@ class Title(Instance):
 	self.update(parameters)
     def __str__(self):
         return self.__pattern__.format(**{ '**parameters': " ".join([str(value) for key, value in self.iteritems() if not key in ('name',)]) })
-
 
 class Simulator(Instance):
     __type__ = "instance"
@@ -416,7 +398,6 @@ class Global(Instance):
         self['name'] = name
     def __str__(self):
         return self.__pattern__.format(**{ 'nodes': " ".join(self['nodes']) })
-
 
 class Alter(Instance):
     __type__ = "instance"
@@ -466,8 +447,6 @@ class AlterGroup(Instance):
 		                           'childs': childs,
 					 })
 
-
-
 class Nport(Device):
     __type__='instance'
     __name__='nport'
@@ -479,7 +458,22 @@ class Nport(Device):
         __parameters__ = dict(self.__default__)
 	__parameters__.update(parameters)
         Device.__init__(self, name=name, nodes=nodes, model='nport', file="\"%s\""%file, **__parameters__)
-    
+
+class Hdl(Instance):
+    __type__='instance'
+    __name__='ahdl_include'
+    __pattern__ = "%s \"{filename}\"" % __name__
+    __indent__ = ""
+    def __init__(self, name='hdl1', path='', filename=''):
+        self['name'] = name
+        self['path'] = path
+        self['filename'] = filename
+    def __str__(self):
+        filename = os.path.join(self['path'].strip(), self['filename'].strip())
+        if not os.path.isfile(filename):
+            raise Exception('Filename \'%s\' does not exist' % filename)        
+        return self.__pattern__.format(**{ 'filename': filename })
+
 
 ################## VERBOSE
 
@@ -524,6 +518,7 @@ class Verbose(Netlist):
 	    self.append( Info(name='primitives', what='primitives') )
 	if self.subckts:
 	    self.append( Info(name='subckts', what='subckts') )
+
 
 
 ################### NEW DEVICES

@@ -3,35 +3,7 @@
 """
 
 from spectre.syntax import *
-from function import *
-
-@deprecated	
-class VNA1P(Netlist):
-    __name__ = "VNA1P"
-    __type__ = "netlist"
-    ports = '[p1]'
-    def __init__(self, name='VNA1P', nodes=('rf1', 'dc1',)):
-        Netlist.__init__(self)
-        self.name = name
-        self.nodes = nodes
-        self.append( Port(name='p1', nodes=('1', '0'), num=1, type='sine') )
-        self.append( Tbias(name='tbias') )
-        self.append( Device(name='tbias1', nodes=('1', 'plus', 'In'), model='tbias') )
-
-@deprecated	
-class VNA2P(Netlist):
-    __name__ = "VNA2P"
-    __type__ = "netlist"
-    ports = '[p1, p2]'
-    def __init__(self, name='VNA2P', nodes=('rf1', 'dc1', 'rf2', 'dc2')):
-        Netlist.__init__(self)
-        self.name = name
-        self.nodes = nodes
-        self.append( Port(name='p1', nodes=('p1', '0'), num=1, type='sine') )
-        self.append( Port(name='p2', nodes=('p2', '0'), num=2, type='sine') )
-        self.append( Tbias(name='tbias') )
-        self.append( Device(name='tbias1', nodes=('p1', nodes[1], nodes[0]), model='tbias') )
-        self.append( Device(name='tbias2', nodes=('p2', nodes[3], nodes[2]), model='tbias') )
+from functions.science import *
 
 class VNA2Px(Netlist):
     __name__ = "VNA2P"

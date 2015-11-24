@@ -1,0 +1,908 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=1020">
+    
+    
+    <title>raphaelvalentin/Utils · GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="raphaelvalentin/Utils" name="twitter:title" /><meta content="Utils - Utilitaires" name="twitter:description" /><meta content="https://avatars3.githubusercontent.com/u/12194328?v=3&amp;s=400" name="twitter:image:src" />
+      <meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars3.githubusercontent.com/u/12194328?v=3&amp;s=400" property="og:image" /><meta content="raphaelvalentin/Utils" property="og:title" /><meta content="https://github.com/raphaelvalentin/Utils" property="og:url" /><meta content="Utils - Utilitaires" property="og:description" />
+      <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+    <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    
+    <meta name="pjax-timeout" content="1000">
+    
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="selected-link" value="repo_source" data-pjax-transient>
+
+    <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+    <meta name="google-analytics" content="UA-3769691-2">
+
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="8BE3577F:26AB:6AE4F47:5654445B" name="octolytics-dimension-request_id" />
+<meta content="/&lt;user-name&gt;/&lt;repo-name&gt;" data-pjax-transient="true" name="analytics-location" />
+<meta content="Rails, view, files#disambiguate" data-pjax-transient="true" name="analytics-event" />
+
+
+  <meta class="js-ga-set" name="dimension1" content="Logged Out">
+    <meta class="js-ga-set" name="dimension4" content="Current repo nav">
+
+
+
+
+    <meta name="is-dotcom" content="true">
+        <meta name="hostname" content="github.com">
+    <meta name="user-login" content="">
+
+      <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#4078c0">
+      <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+    <meta content="19864fe9a58ed37abad07a491336d96ded38d815" name="form-nonce" />
+
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-3698fb0adc53fda9a2672a02c3fa3b20b89480f2a47ce38216b21cf3eb5b4750.css" media="all" rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github2-84f5bb59141e497516d920891b2b4b9546f973becc8d7a34706b8ad2d556ef40.css" media="all" rel="stylesheet" />
+    
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="efef53cedb8e9d707a094b7ee9bb1be4">
+
+      
+  <meta name="description" content="Utils - Utilitaires">
+  <meta name="go-import" content="github.com/raphaelvalentin/Utils git https://github.com/raphaelvalentin/Utils.git">
+
+  <meta content="12194328" name="octolytics-dimension-user_id" /><meta content="raphaelvalentin" name="octolytics-dimension-user_login" /><meta content="42436703" name="octolytics-dimension-repository_id" /><meta content="raphaelvalentin/Utils" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="42436703" name="octolytics-dimension-repository_network_root_id" /><meta content="raphaelvalentin/Utils" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/raphaelvalentin/Utils/commits/master.atom" rel="alternate" title="Recent Commits to Utils:master" type="application/atom+xml">
+
+  </head>
+
+
+  <body class="logged_out   env-production  vis-public">
+    <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+
+    
+    
+    
+
+
+
+      
+      <div class="header header-logged-out" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-wordmark" href="https://github.com/" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+      <span class="mega-octicon octicon-logo-github"></span>
+    </a>
+
+    <div class="header-actions" role="navigation">
+        <a class="btn btn-primary" href="/join" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+      <a class="btn" href="/login?return_to=%2Fraphaelvalentin%2FUtils" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+    </div>
+
+    <div class="site-search repo-scope js-site-search" role="search">
+      <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/raphaelvalentin/Utils/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/raphaelvalentin/Utils/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+  <label class="js-chromeless-input-container form-control">
+    <div class="scope-badge">This repository</div>
+    <input type="text"
+      class="js-site-search-focus js-site-search-field is-clearable chromeless-input"
+      data-hotkey="s"
+      name="q"
+      placeholder="Search"
+      aria-label="Search this repository"
+      data-global-scope-placeholder="Search GitHub"
+      data-repo-scope-placeholder="Search"
+      tabindex="1"
+      autocapitalize="off">
+  </label>
+</form>
+    </div>
+
+      <ul class="header-nav left" role="navigation">
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="/explore" data-ga-click="(Logged out) Header, go to explore, text:explore">Explore</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="/features" data-ga-click="(Logged out) Header, go to features, text:features">Features</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://enterprise.github.com/" data-ga-click="(Logged out) Header, go to enterprise, text:enterprise">Enterprise</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="/pricing" data-ga-click="(Logged out) Header, go to pricing, text:pricing">Pricing</a>
+          </li>
+      </ul>
+
+  </div>
+</div>
+
+
+
+    <div id="start-of-content" class="accessibility-aid"></div>
+
+    <div id="js-flash-container">
+</div>
+
+
+    <div role="main" class="main-content">
+        <div itemscope itemtype="http://schema.org/WebPage">
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+
+      <div class="container">
+
+        <div class="clearfix">
+          
+
+<ul class="pagehead-actions">
+
+  <li>
+      <a href="/login?return_to=%2Fraphaelvalentin%2FUtils"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to watch a repository" rel="nofollow">
+    <span class="octicon octicon-eye"></span>
+    Watch
+  </a>
+  <a class="social-count" href="/raphaelvalentin/Utils/watchers">
+    1
+  </a>
+
+  </li>
+
+  <li>
+      <a href="/login?return_to=%2Fraphaelvalentin%2FUtils"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to star a repository" rel="nofollow">
+    <span class="octicon octicon-star"></span>
+    Star
+  </a>
+
+    <a class="social-count js-social-count" href="/raphaelvalentin/Utils/stargazers">
+      0
+    </a>
+
+  </li>
+
+  <li>
+      <a href="/login?return_to=%2Fraphaelvalentin%2FUtils"
+        class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+        aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <span class="octicon octicon-repo-forked"></span>
+        Fork
+      </a>
+
+    <a href="/raphaelvalentin/Utils/network" class="social-count">
+      0
+    </a>
+  </li>
+</ul>
+
+          <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public ">
+  <span class="mega-octicon octicon-repo"></span>
+  <span class="author"><a href="/raphaelvalentin" class="url fn" itemprop="url" rel="author"><span itemprop="title">raphaelvalentin</span></a></span><!--
+--><span class="path-divider">/</span><!--
+--><strong><a href="/raphaelvalentin/Utils" data-pjax="#js-repo-pjax-container">Utils</a></strong>
+
+  <span class="page-context-loader">
+    <img alt="" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+  </span>
+
+</h1>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline with-full-navigation">
+        <div class="repository-sidebar clearfix">
+          
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders"
+     role="navigation"
+     data-pjax="#js-repo-pjax-container"
+     data-issue-count-url="/raphaelvalentin/Utils/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="/raphaelvalentin/Utils" aria-label="Code" aria-selected="true" class="js-selected-navigation-item selected sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /raphaelvalentin/Utils">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="/raphaelvalentin/Utils/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /raphaelvalentin/Utils/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="js-issue-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull requests">
+      <a href="/raphaelvalentin/Utils/pulls" aria-label="Pull requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /raphaelvalentin/Utils/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull requests</span>
+          <span class="js-pull-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="/raphaelvalentin/Utils/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /raphaelvalentin/Utils/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="/raphaelvalentin/Utils/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /raphaelvalentin/Utils/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+  </ul>
+
+
+</nav>
+
+            <div class="only-with-full-nav">
+                
+<div class="js-clone-url clone-url open"
+  data-protocol-type="http">
+  <h3 class="text-small text-muted"><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini text-small text-muted input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/raphaelvalentin/Utils.git" readonly="readonly" aria-label="HTTPS clone URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url "
+  data-protocol-type="subversion">
+  <h3 class="text-small text-muted"><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini text-small text-muted input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/raphaelvalentin/Utils" readonly="readonly" aria-label="Subversion checkout URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+
+<div class="clone-options text-small text-muted">You can clone with
+  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone" class="inline-form js-clone-selector-form " data-form-nonce="19864fe9a58ed37abad07a491336d96ded38d815" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="PRdNkgRkIObmwspsHeOafV8OeGq9mc+rILVudqy4jhfgzQIHxvh+BD7xN9RIU+WO96AisuZn3xOC6gnBu6uK4w==" /></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form> or <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone" class="inline-form js-clone-selector-form " data-form-nonce="19864fe9a58ed37abad07a491336d96ded38d815" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="Kic3yqpQPTBP2s+1SQhpy6OFf0I6F1ZXTH62tqHP+cbHAI5H6QUt6boEUAkTsloweSTGv+0yRDO0sR5bAf3pTw==" /></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
+  <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</div>
+
+              <a href="/raphaelvalentin/Utils/archive/master.zip"
+                 class="btn btn-sm sidebar-button"
+                 aria-label="Download the contents of raphaelvalentin/Utils as a zip file"
+                 title="Download the contents of raphaelvalentin/Utils as a zip file"
+                 rel="nofollow">
+                <span class="octicon octicon-cloud-download"></span>
+                Download ZIP
+              </a>
+            </div>
+        </div>
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+
+          
+<span id="js-show-full-navigation"></span>
+
+  <div class="repository-meta js-details-container ">
+    <div class="repository-description">
+      Utilitaires
+    </div>
+
+
+</div>
+
+
+<div class="overall-summary overall-summary-bottomless">
+
+  <div class="stats-switcher-viewport js-stats-switcher-viewport">
+    <div class="stats-switcher-wrapper">
+    <ul class="numbers-summary">
+      <li class="commits">
+        <a data-pjax href="/raphaelvalentin/Utils/commits/master">
+            <span class="octicon octicon-history"></span>
+            <span class="num text-emphasized">
+              9
+            </span>
+            commits
+        </a>
+      </li>
+      <li>
+        <a data-pjax href="/raphaelvalentin/Utils/branches">
+          <span class="octicon octicon-git-branch"></span>
+          <span class="num text-emphasized">
+            1
+          </span>
+          branch
+        </a>
+      </li>
+
+      <li>
+        <a data-pjax href="/raphaelvalentin/Utils/releases">
+          <span class="octicon octicon-tag"></span>
+          <span class="num text-emphasized">
+            0
+          </span>
+          releases
+        </a>
+      </li>
+
+      <li>
+        
+  <a href="/raphaelvalentin/Utils/graphs/contributors">
+    <span class="octicon octicon-organization"></span>
+    <span class="num text-emphasized">
+      1
+    </span>
+    contributor
+  </a>
+      </li>
+    </ul>
+
+      <div class="repository-lang-stats">
+        <ol class="repository-lang-stats-numbers">
+          <li>
+              <a href="/raphaelvalentin/Utils/search?l=python">
+                <span class="color-block language-color" style="background-color:#3572A5;"></span>
+                <span class="lang">Python</span>
+                <span class="percent">99.1%</span>
+              </a>
+          </li>
+          <li>
+              <a href="/raphaelvalentin/Utils/search?l=e">
+                <span class="color-block language-color" style="background-color:#ccce35;"></span>
+                <span class="lang">E</span>
+                <span class="percent">0.9%</span>
+              </a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <div class="repository-lang-stats-graph js-toggle-lang-stats" title="Click for language details">
+    <span class="language-color" aria-label="Python 99.1%" style="width:99.1%; background-color:#3572A5;" itemprop="keywords">Python</span>
+    <span class="language-color" aria-label="E 0.9%" style="width:0.9%; background-color:#ccce35;" itemprop="keywords">E</span>
+  </div>
+
+<include-fragment src="/raphaelvalentin/Utils/show_partial?partial=tree%2Frecently_touched_branches_list"></include-fragment>
+
+  <div class="file-navigation in-mid-page">
+  <a href="/raphaelvalentin/Utils/find/master"
+        class="js-show-file-finder btn btn-sm empty-icon tooltipped tooltipped-s right"
+        data-pjax
+        data-hotkey="t"
+        aria-label="Quickly jump between files"
+        data-ga-click="Repository, find file, location:repo overview">
+    <span class="octicon octicon-list-unordered"></span>
+  </a>
+
+    <a href="/raphaelvalentin/Utils/compare" aria-label="Compare, review, create a pull request" class="btn btn-sm btn-primary tooltipped tooltipped-se left compare-button" aria-label="Compare &amp; review" data-pjax data-ga-click="Repository, go to compare view, location:repo overview; icon:git-compare">
+      <span class="octicon octicon-git-compare"></span>
+    </a>
+
+  
+<div class="select-menu js-menu-container js-select-menu left">
+  <button class="btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w"
+    title="master"
+    type="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <i>Branch:</i>
+    <span class="js-select-button css-truncate-target">master</span>
+  </button>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+        <span class="select-menu-title">Switch branches/tags</span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" data-filter-placeholder="Filter branches/tags" class="js-select-menu-tab" role="tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab" role="tab">Tags</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches" role="menu">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <a class="select-menu-item js-navigation-item js-navigation-open selected"
+               href="/raphaelvalentin/Utils/tree/master"
+               data-name="master"
+               data-skip-pjax="true"
+               rel="nofollow">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <span class="select-menu-item-text css-truncate-target" title="master">
+                master
+              </span>
+            </a>
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="breadcrumb"><span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/raphaelvalentin/Utils" class="" data-branch="master" data-pjax="true" itemscope="url"><span itemprop="title">Utils</span></a></span></span><span class="separator">/</span>
+  <span class="tooltipped tooltipped-e disabled text-muted" aria-label="You must be signed in to make or propose changes">
+    <span class="octicon octicon-plus"></span>
+  </span>
+</div>
+</div>
+
+
+
+
+
+  <div class="commit-tease js-details-container">
+    <span class="right">
+      Latest commit
+      <a class="commit-tease-sha" href="/raphaelvalentin/Utils/commit/9c47dad177e242714ee8960be2dc5b19a1b15a47" data-pjax>
+        9c47dad
+      </a>
+      <time datetime="2015-10-12T22:34:38Z" is="relative-time">Oct 13, 2015</time>
+    </span>
+
+
+    <span class="commit-author-section">
+      <img alt="@raphaelvalentin" class="avatar" height="20" src="https://avatars1.githubusercontent.com/u/12194328?v=3&amp;s=40" width="20" />
+      <a href="/raphaelvalentin" class="user-mention" rel="author">raphaelvalentin</a>
+    </span>
+
+        <a href="/raphaelvalentin/Utils/commit/9c47dad177e242714ee8960be2dc5b19a1b15a47" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+    </span>
+
+  </div>
+
+
+<div class="file-wrap">
+  <a href="/raphaelvalentin/Utils/tree/9c47dad177e242714ee8960be2dc5b19a1b15a47" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+  <table class="files js-navigation-container js-active-navigation-container" data-pjax>
+
+
+    <tbody>
+      <tr class="warning include-fragment-error">
+        <td class="icon"><span class="octicon octicon-alert"></span></td>
+        <td class="content" colspan="3">Failed to load latest commit information.</td>
+      </tr>
+
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/fast" class="js-directory-link js-navigation-open" id="31d4541b8e926a24f0c9b835b68cfdf3-b8d4a6932409cea03900ae634773096b6ad27f07" title="fast">fast</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/functions" class="js-directory-link js-navigation-open" id="0eaa46c12c8190dcb4e4b46838220683-323872495bdca3ecb391d2623bc9dc155baa69cf" title="functions">functions</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/graph" class="js-directory-link js-navigation-open" id="f8b0b924ebd7046dbfa85a856e4682c8-58bb157b9b5bc4433119f5af2d35c64d2622c1ca" title="graph">graph</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/interpolate" class="js-directory-link js-navigation-open" id="a38db99c73ac1258e03067286e3f4e02-0aebe988381af349534dd55a42f982c68fea69e2" title="interpolate">interpolate</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/9c47dad177e242714ee8960be2dc5b19a1b15a47" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-10-12T22:34:38Z" is="time-ago">Oct 13, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/libarray" class="js-directory-link js-navigation-open" id="8515580704e8f0b60105661f96c8264b-25f6d25d247c7cec3bcd4932d9e2d207dd0061de" title="libarray">libarray</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/ngspice" class="js-directory-link js-navigation-open" id="ffad8f63c0cb705a1a220d52801f9bfb-837aea445d3e90b09944f1cd87bbc1a7242a5e25" title="ngspice">ngspice</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/9c47dad177e242714ee8960be2dc5b19a1b15a47" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-10-12T22:34:38Z" is="time-ago">Oct 12, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/optimize" class="js-directory-link js-navigation-open" id="c14f7a753888287112058264fa40b72d-5df38665714bcc8cdb96634a79445e2ee4304064" title="optimize">optimize</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/rawdata" class="js-directory-link js-navigation-open" id="9ec5ea764c89ce71fd4d0cc2a18bae11-464047ca321f2313dde5e20e9e211c639b66e247" title="rawdata">rawdata</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/spectre" class="js-directory-link js-navigation-open" id="bd8d11f8d55119fa2e2eb9e8c3095ee3-c1f75cd8ba2c5d85b917b30f1bc5d5d22bd1bc28" title="spectre">spectre</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-directory"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/tree/master/symbolic" class="js-directory-link js-navigation-open" id="7bf46ad61adc2265f803fc3b798b3559-e04d32e896180357f6c5143651ecca806eb50506" title="symbolic">symbolic</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/23dff8d194329c0c9348eb8ba470c6ef22e2a3a0" class="message" data-pjax="true" title="bug symbolic">bug symbolic</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-10-11T21:21:03Z" is="time-ago">Oct 12, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/.gitignore" class="js-directory-link js-navigation-open" id="a084b794bc0759e7a6b77810e01874f2-8fedf4d7bf20a3f2403a279503515cf271b10596" title=".gitignore">.gitignore</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/10a3b038abfce940b956c42ea7a84da524ba57f0" class="message" data-pjax="true" title="parameter instance bug">parameter instance bug</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-27T09:24:07Z" is="time-ago">Sep 27, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/INSTALL" class="js-directory-link js-navigation-open" id="6a755e7d228a2b491321dbae0a7a248b-b2091d4ddddecdb1228f141350532ca98cea5134" title="INSTALL">INSTALL</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/LICENSE" class="js-directory-link js-navigation-open" id="9879d6db96fd29134fc802214163b95a-8cdb8451d9b90c1d4000c6f22eb86471a4568be6" title="LICENSE">LICENSE</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/088554551da5b745ea8dc379b902d8c93fd708d7" class="message" data-pjax="true" title="Initial commit">Initial commit</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-14T08:30:47Z" is="time-ago">Sep 14, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/README" class="js-directory-link js-navigation-open" id="c47c7c7383225ab55ff591cb59c41e6b-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391" title="README">README</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/2e1b3ff082f21eea624097288545850830699a83" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-22T07:45:44Z" is="time-ago">Sep 22, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/README.md" class="js-directory-link js-navigation-open" id="04c6e90faac2675aa89e2176d2eec7d8-e7f2d1dfb3844396ee9fdac18972934167814e2e" title="README.md">README.md</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/088554551da5b745ea8dc379b902d8c93fd708d7" class="message" data-pjax="true" title="Initial commit">Initial commit</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-14T08:30:47Z" is="time-ago">Sep 14, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/setup.py" class="js-directory-link js-navigation-open" id="2eeaed663bd0d25b7e608891384b7298-ecd956a1b52dce3898df2ebd7ea030aae51296b3" title="setup.py">setup.py</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/9c47dad177e242714ee8960be2dc5b19a1b15a47" class="message" data-pjax="true" title="version 0.0.3">version 0.0.3</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-10-12T22:34:38Z" is="time-ago">Oct 12, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/xytech-utils-collection-0.0.1.linux-i686.tar.gz" class="js-directory-link js-navigation-open" id="f5a857584d971976c64461a88ff6ab18-24573395a6612a489e4f69034efc3c880c3024e6" title="xytech-utils-collection-0.0.1.linux-i686.tar.gz">xytech-utils-collection-0.0.1.linux-i686.tar.gz</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/319665326988fd1026b83f9be41244ba578b9281" class="message" data-pjax="true" title="	new file:   xytech-utils-collection-0.0.1.linux-i686.tar.gz">	new file: xytech-utils-collection-0.0.1.linux-i686.tar.gz</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-14T08:34:56Z" is="time-ago">Sep 14, 2015</time></span>
+          </td>
+        </tr>
+        <tr class="js-navigation-item">
+          <td class="icon">
+            <span class="octicon octicon-file-text"></span>
+            <img alt="" class="spinner" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </td>
+          <td class="content">
+            <span class="css-truncate css-truncate-target"><a href="/raphaelvalentin/Utils/blob/master/xytech-utils-collection-0.0.2.linux-i686.tar.gz" class="js-directory-link js-navigation-open" id="378aaec083c82a2eade6512f4f443d65-a568b9eb9b02731782079b7235fd54cbc80f2ede" title="xytech-utils-collection-0.0.2.linux-i686.tar.gz">xytech-utils-collection-0.0.2.linux-i686.tar.gz</a></span>
+          </td>
+          <td class="message">
+            <span class="css-truncate css-truncate-target">
+                  <a href="/raphaelvalentin/Utils/commit/cdef0313474ec0b72adc59d8da306424e28b744b" class="message" data-pjax="true" title="version 0.0.2">version 0.0.2</a>
+            </span>
+          </td>
+          <td class="age">
+            <span class="css-truncate css-truncate-target"><time datetime="2015-09-19T11:30:23Z" is="time-ago">Sep 19, 2015</time></span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+  <div id="readme" class="boxed-group flush clearfix announce instapaper_body md">
+    <h3>
+      <span class="octicon octicon-book"></span>
+      README.md
+    </h3>
+
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1><a id="user-content-utils" class="anchor" href="#utils" aria-hidden="true"><span class="octicon octicon-link"></span></a>Utils</h1>
+
+<p>Utilitaires</p>
+</article>
+  </div>
+
+
+        </div>
+      </div>
+      <div class="modal-backdrop"></div>
+    </div>
+  </div>
+
+
+    </div>
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+        <li><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+      <li><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+        <li><a href="https://github.com/pricing" data-ga-click="Footer, go to pricing, text:pricing">Pricing</a></li>
+
+    </ul>
+
+    <a href="https://github.com" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+</a>
+    <ul class="site-footer-links">
+      <li>&copy; 2015 <span title="0.08790s from github-fe128-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
+        <li><a href="https://help.github.com" data-ga-click="Footer, go to help, text:help">Help</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    
+    
+    
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+        <span class="octicon octicon-x"></span>
+      </button>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/frameworks-7d180c2bb5779ecb7ab5d04ce8af999e73836dcf0df1a8c44b69c62a1de0732f.js"></script>
+      <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-ce3f8ded64fca830a938a7c5546be8689fe08d3687cd71a9c03f141d37c6e409.js"></script>
+      
+      
+    <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner hidden">
+      <span class="octicon octicon-alert"></span>
+      <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
+      <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
+    </div>
+  </body>
+</html>
+

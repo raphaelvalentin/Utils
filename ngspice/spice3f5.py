@@ -1,5 +1,5 @@
 from libarray import *
-from exception import Exception
+
 
 class rawspice(dict):
     def __init__(self, filename=None):

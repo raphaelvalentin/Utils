@@ -1,8 +1,8 @@
-import re, time, os
+import re, time, os, shutil, string
 from subprocess import Popen, PIPE, STDOUT
+from random import randint, seed
 
-
-__all__ = ['find', 'removedirs', 'source', 'tempfile']
+__all__ = ['find', 'removedirs', 'source', 'tempfile', 'copy', 'rm', 'template, template_dir']
 
 def find(path='.', regex='*', ctime=0):
     r = []
@@ -23,26 +23,61 @@ def find(path='.', regex='*', ctime=0):
             pass
     return r
 
-
-def removedirs(*files):
-    for i, file in enumerate(files):
+def rm(*files):
+#    for i, file in enumerate(files):
+#        try:
+#            os.system('/bin/rm -rf %s > /dev/null 2>&1'%file)
+#	except:
+#	    pass
+    # more pythonic
+    for src in files:
         try:
-            os.system('/bin/rm -rf %s > /dev/null 2>&1'%file)
-	except:
-	    pass
+            if os.path.isdir(src):
+                shutil.rmtree(src)
+            else:
+                os.remove(src)
+        except OSError as e:
+            print('%s not removed. Error: %s'%(src, e))
 
-
+def removedirs(*args):
+    print 'Deprecated: use rm'
+    rm(*args)
+    
 def source(filename):
-        cmd = "source {filename}; env".format(filename=filename)
-        p = Popen(cmd, executable='/bin/tcsh', stdout=PIPE, stderr=STDOUT, shell=True, env=os.environ)
-        stdout = p.communicate()[0].splitlines()
-        for line in stdout:
-            if re.search('[0-9a-zA-Z_-]+=\S+', line):
-                key, value = line.split("=", 1)
-                os.environ[key] = value
+    cmd = "source {filename}; env".format(filename=filename)
+    p = Popen(cmd, executable='/bin/tcsh', stdout=PIPE, stderr=STDOUT, shell=True, env=os.environ)
+    stdout = p.communicate()[0].splitlines()
+    for line in stdout:
+        if re.search('[0-9a-zA-Z_-]+=\S+', line):
+            key, value = line.split("=", 1)
+            os.environ[key] = value
 
-from random import randint, seed
-from exceptions import OSError
+def copy(src, dest, force=False):
+    try:
+        if force and os.path.isdir(dest):
+            # not good for speed
+            rm(dest)
+        shutil.copytree(src, dest)
+    except OSError as e:
+        # if src is not a directory
+        if e.errno == errno.ENOTDIR:
+            shutil.copy(src, dest)
+        else:
+            print('%s not copied. Error: %s'%(src, e))
+
+def template(src, dest, substitute={}):
+    with open(src) as f:
+        s = string.Template(f.read())
+        o = s.safe_substitute(substitute)
+    with open(dest, 'w') as g:
+        g.write(o)
+
+def template_dir(src, dest, substitute={}):
+    if src<>dest:
+        copy(src, dest, force=True)
+    for root, subdirs, files in os.walk(dest):
+        file_path = os.path.join(dest, filename)
+        s = template(file_path, file_path, substitute)
 
 class tempfile:
     letters = "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
@@ -69,5 +104,4 @@ class tempfile:
 	        if n > 12:
 	            raise OSError('cannot create a temporary directory')
 
-if __name__=='__main__':
-    print random_string()
+

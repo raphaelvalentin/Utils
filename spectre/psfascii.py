@@ -1,4 +1,4 @@
-from libarray import *
+import numpy as np
 import time
 
 __all__ = ['psfascii']
@@ -12,9 +12,9 @@ class psfascii(dict):
         isreadable = False
         for i in xrange(self.test):
 	    with open(self.filename) as f:
-	        lines = f.readlines()
+                lines = f.readlines()
 		if len(lines)>3:
-                    if lines[0].strip() == "HEADER" and lines[1].strip() == '"PSFversion" "1.00"' and lines[-1].strip() == "END":
+                    if lines[0].strip() == "HEADER" and lines[1].strip() == '"PSFversion" "1.00"' and (lines[-1].strip() == "END" or lines[-2].strip() == "END"):
 		        isreadable = True
 	                break
 	    time.sleep(0.1)
@@ -82,8 +82,8 @@ class psfascii(dict):
                         l = lines[indxLine]
 		        indxLine += 1
                         line += " " + l.strip()
-                d = line.replace("\"", "").split()
-                key, value = d[0], d[1]
+                b1 = line.find("\""); b2 = line.find("\"", b1+1)
+                key, value = line[b1+1:b2], line[b2+1:].split()[0]
                 TYPE[key] = value
             elif isSWEEP:
 	        ibracket = 0
@@ -96,7 +96,7 @@ class psfascii(dict):
                         line += " " + l.strip()
                 d = line.replace("\"", "").split()
                 key, value = d[0], d[1]
-                self[key] = array([])
+                self[key] = []
                 if TYPE[value] == "FLOAT":
                     type[key] = float
                 elif TYPE[value] == "COMPLEX":
@@ -112,9 +112,11 @@ class psfascii(dict):
                         l = lines[indxLine]
 		        indxLine += 1
                         line += " " + l.strip()
-                d = line.replace("\"", "").split()
-                key, value = d[0], d[1]
-                self[key] = array([])
+                b1 = line.find("\""); b2 = line.find("\"", b1+1)
+                key = line[b1+1:b2]
+                b1 = line.find("\"", b2+1); b2 = line.find("\"", b1+1)
+                value = line[b1+1:b2]
+                self[key] = []
                 if TYPE[value] == "FLOAT":
                     type[key] = float
                 elif TYPE[value] == "COMPLEX":
@@ -130,7 +132,8 @@ class psfascii(dict):
                         l = lines[indxLine]
 		        indxLine += 1
                         line += " " + l.strip()
-                key, value = line.replace("\"", "").split(None, 1)
+                b1 = line.find("\""); b2 = line.find("\"", b1+1)
+                key, value = line[b1+1:b2], line[b2+1:].strip()
                 if isSWEEPed:
                     if type[key] == float:
                         self[key].append(float(value))
@@ -142,7 +145,9 @@ class psfascii(dict):
                         self[key].append(list(float(x) for x in v))
                 else:
                     if not(key in self):
-                        self[key]=array([])
+                        self[key]=[]
                     type[key] = value.split()[0]
                     self[key].append(float(value.split()[1]))
+        for key,value in self.iteritems():
+           self[key] = np.array(value)
         return self

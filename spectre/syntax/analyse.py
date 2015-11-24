@@ -1,13 +1,13 @@
-from exception import *
 import os
 from spectre.syntax import Instance, common
 from string import *
+import numpy as np
 
 __all__ = ['Noise', 'Xf', 'Ac', 'Dc', 'Sweep', 'MonteCarlo', 'Sp', 'Transient', 'Pss' ]
 
 class values(list):
     def __init__(self, it):
-        if isinstance(it, list):
+        if isinstance(it, (list, np.ndarray)):
             list.__init__(self, it)
 	else:
 	    list.__init__(self, [it])
@@ -186,14 +186,19 @@ class Sp(Instance):
     def __str__(self):
         if 'values' in self:
 	    self['values'] = values(self['values'])
-	self.setSpecialKeywords('name')
+        parameters = ["%s=%s" % (k, v) \
+		      for k, v in self.iteritems() \
+		      if k not in ('name', 'donoise')]
+        if self.get('donoise',False):
+            parameters.append('donoise=yes')
         return self.__pattern__.format(**{'name': self['name'], 
-	                                  '**parameters': Instance.__str__(self),
-	                              })
+		                          '**parameters': " ".join(parameters),
+					 })
     def getRawFiles(self):
         if 'donoise' in self:
 	    if self['donoise'] in ('True', True):
-                return ['{name}.{extension}'.format(name=self['name'], extension=self.__name__), '{name}.noise.{extension}'.format(name=self['name'], extension=self.__name__),]
+                return ['{name}.{extension}'.format(name=self['name'], extension=self.__name__), 
+                        '{name}.noise.{extension}'.format(name=self['name'], extension=self.__name__)]
         return ['{name}.{extension}'.format(name=self['name'], extension=self.__name__)]
 
 

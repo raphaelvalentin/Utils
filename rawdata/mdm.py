@@ -1,6 +1,7 @@
 from libarray import *
 from functions import *
 import sys
+from collections import OrderedDict
 
 __all__ = ['mdm']
 
@@ -33,7 +34,8 @@ class mdm(list):
                     raise Exception('\'END_DB\' is missing.')
                 isBEGIN = True
                 isDATA = False
-                data = {}
+                #data = {}
+                data = OrderedDict()
                 keys = []
             elif 'END_DB' == line:
                 if isBEGIN == False:
@@ -47,12 +49,14 @@ class mdm(list):
                     isHEADER = False
                 elif 'ICCAP_OUTPUTS' == line:
                     isICCAP_OUTPUTS = True
+                elif 'ICCAP_VALUES' == line:
+                    isICCAP_OUTPUTS = False
                 elif isICCAP_OUTPUTS:
                     d = line.split()
                     header[d[0]] = d[1]
             elif isBEGIN:
-                if line[:3] == 'VAR' and not isDATA:
-                    line = line[3:].strip()
+                if line[:9] == 'ICCAP_VAR' and not isDATA:
+                    line = line.split(None, 1)[1]
                     if line[0]=='"':
                         end = line.find('"',1)
                         if end>1:

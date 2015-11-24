@@ -1,8 +1,7 @@
 """ primitives
 """
-from exception import *
 from spectre import simulator
-from function import flatten
+from functions.science import flatten
 import os
 from spectre.syntax import *
 from spectre.modelParameter import modelParameter
@@ -20,13 +19,12 @@ class Netlist(list):
         s = []
         isverbose = False
         for dev in self:
-	    dev.__indent__ = self.__indent__
-	    try:
+            if hasattr(dev, '__indent__'):
+	        dev.__indent__ = self.__indent__
+            if hasattr(dev, '__name__'):
 	        if dev.__name__ is 'verbose':
 	            isverbose = True
-	    except:
-	        pass
-            s.append(dev.__str__())
+            s.append(str(dev))
 	if not self.__class__.__name__ in ('Verbose', 'Info'):
 	    if not isverbose:
 	        if hasattr(self,'__verbose__') and self.__verbose__:
@@ -81,7 +79,7 @@ class Netlist(list):
 	return False
  
 
-@deprecated
+
 class common(object):
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():
