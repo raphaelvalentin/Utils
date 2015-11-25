@@ -1,66 +1,100 @@
 cimport cython
 from libc.stdlib cimport malloc, free
 
-# LOW LEVEL SEARCH FUNCTION (FASTEST)
+# LOW LEVEL SEARCH FUNCTION
 cdef _nearest1(float *cflist, int n, float value, int *index):
-    cdef float result0
-    cdef int index0
-    cdef float ci1, ci2
-    result0 = cflist[0]
-    index0 = 0
+    cdef float ci, ci1
+    index[0] = 0
+    ci1 = cflist[0] - value
+    if ci1 < 0:
+        ci1 = -ci1
     for i in range(1, n, 1):
-        ci1 = cflist[i] - value
-        ci2 = result0 - value
-        if ci1*ci1 < ci2*ci2:
-            result0 = cflist[i]
-            index0 = i
-    index[0] = index0
+        ci = cflist[i] - value
+        if ci < 0:
+            ci = -ci
+        if ci < ci1:
+            index[0] = i
+            ci1 = ci
 
 cdef _nearest2(float *cflist, int n, float value, int *index):
-    cdef float result0, result1
-    cdef int index0, index1
-    cdef float ci1, ci2, ci3
-    result0 = cflist[0]
-    result1 = cflist[1]
-    index0 = 0
-    index1 = 1
+    cdef float ci, ci1, ci2
+    ci1 = cflist[0] - value
+    if ci1 < 0:   # abs
+        ci1 = -ci1
+    ci2 = cflist[1] - value
+    if ci2 < 0:   # abs
+        ci2 = -ci2
+    if ci1 < ci2:
+        index[0] = 0
+        index[1] = 1
+    else:
+        index[0] = 1
+        index[1] = 0
+        t = ci1
+        ci1 = ci2
+        ci2 = t
     for i in range(2, n, 1):
-        ci1 = cflist[i] - value
-        ci2 = result0 - value
-        ci3 = result1 - value
-        if value!=result1 and ci1*ci1 < ci2*ci2:
-            result0 = cflist[i]
-            index0 = i
-        elif value!=result0 and ci1*ci1 < ci3*ci3:
-            result1 = cflist[i]
-            index1 = i
-    index[0] = index0
-    index[1] = index1
+        ci = cflist[i] - value
+        if ci < 0:   # abs
+            ci = -ci
+        if ci < ci1:
+            index[1] = index[0]
+            index[0] = i
+            ci2 = ci1
+            ci1 = ci
+        elif ci < ci2:
+            index[1] = i
+            ci2 = ci
 
 cdef _nearest3(float *cflist, int n, float value, int *index):
-    cdef float result0, result1, result2
-    cdef int index0, index1, index2
-    cdef float ci1, ci2, ci3, ci4
-    result0 = cflist[0]
-    result1 = cflist[1]
-    result2 = cflist[2]
-    index0 = 0
-    index1 = 1
-    index2 = 2
+    cdef float ci, ci0, ci1, ci2
+    # initialize
+    index[0] = 0
+    ci0 = cflist[0] - value
+    if ci0 < 0:
+        ci0 = -ci0
+    index[1] = 1
+    ci1 = cflist[1] - value
+    if ci1 < 0:
+        ci1 = -ci1
+    index[2] = 2
+    ci2 = cflist[2] - value
+    if ci2 < 0:
+        ci2 = -ci2
+    # sort
+    if ci2 < ci1:
+        t = ci1
+        ci1 = ci2
+        ci2 = t
+    if ci1 < ci0:
+        t = ci0
+        ci0 = ci1
+        ci1 = t
+    if ci2 < ci1:
+        t = ci1
+        ci1 = ci2
+        ci2 = t
     for i in range(3, n, 1):
-        ci1 = cflist[i] - value
-        ci2 = result0 - value
-        ci3 = result1 - value
-        ci4 = result2 - value
-        if value!=result1 and value!=result2 and ci1*ci1 < ci2*ci2:
-            result0 = cflist[i]
-        elif value!=result0 and value!=result2 and ci1*ci1 < ci3*ci3:
-            result1 = cflist[i]
-        elif value!=result0 and value!=result1 and ci1*ci1 < ci4*ci4:
-            result2 = cflist[i]
-    index[0] = index0
-    index[1] = index1
-    index[2] = index2
+        ci = cflist[i] - value
+        if ci < 0:
+            ci = -ci
+        if ci < ci0:
+            index[2] = index[1]
+            index[1] = index[0]
+            index[0] = i
+            ci2 = ci1
+            ci1 = ci0
+            ci0 = ci
+        elif ci < ci1:
+            index[2] = index[1]
+            index[1] = i
+            ci2 = ci1
+            ci1 = ci
+        elif ci < ci2:
+            index[2] = i
+            ci2 = ci
+
+
 
 # WRAP
 def nearest1(flist, value):

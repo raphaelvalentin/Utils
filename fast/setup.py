@@ -1,8 +1,13 @@
 from distutils.core import setup
+from distutils.extension import Extension
 from Cython.Build import cythonize
 
+
+extensions = [
+    Extension("_nearest", ["_nearest.pyx"]),
+    ]
+
 setup(
-  name = 'Nearest fast functions',
-  ext_modules = cythonize("_nearest.pyx"),
+    ext_modules = cythonize(extensions)
 )
 
