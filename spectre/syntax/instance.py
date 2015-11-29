@@ -285,7 +285,6 @@ class Model(Instance):
 	                                   '**parameters': " ".join(["%s=%s" % (key, value) \
 					                             for key, value in self.iteritems() \
 								     if not key in ('name','model')]) })
-
            
 class Comment(Instance):
     __type__ = "instance"

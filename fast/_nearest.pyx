@@ -1,196 +1,116 @@
 cimport cython
-from libc.stdlib cimport malloc, free
+import numpy as np
+cimport numpy as np
 
-# LOW LEVEL SEARCH FUNCTION
-cdef _nearest1(float *cflist, int n, float value, int *index):
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef nearest1(np.ndarray[double, ndim=1] array, double value):
+    """ return the index of the nearest point of a numpy array of double
+    """
+    cdef int* cindex  = [0]
+    cdef int n = array.shape[0]
     cdef float ci, ci1
-    index[0] = 0
-    ci1 = cflist[0] - value
-    if ci1 < 0:
+    cdef int i
+    assert n>0, 'size of array too short'
+    cindex[0] = 0
+    ci1 = array[0] - value
+    if ci1 < 0.0:
         ci1 = -ci1
     for i in range(1, n, 1):
-        ci = cflist[i] - value
-        if ci < 0:
+        ci = array[<unsigned int>(i)] - value
+        if ci < 0.0:
             ci = -ci
         if ci < ci1:
-            index[0] = i
+            cindex[0] = i
             ci1 = ci
+    return cindex[0]
 
-cdef _nearest2(float *cflist, int n, float value, int *index):
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef nearest2(np.ndarray[double, ndim=1] array, double value):
+    """ return the 2 indexes of the nearest point of a numpy array of double
+    """
+    cdef int* cindex  = [0, 1]
+    cdef int n = array.shape[0]
     cdef float ci, ci1, ci2
-    ci1 = cflist[0] - value
+    cdef int i
+    assert n>1, 'size of array too short'
+    ci1 = array[0] - value
     if ci1 < 0:   # abs
         ci1 = -ci1
-    ci2 = cflist[1] - value
+    ci2 = array[1] - value
     if ci2 < 0:   # abs
         ci2 = -ci2
-    if ci1 < ci2:
-        index[0] = 0
-        index[1] = 1
-    else:
-        index[0] = 1
-        index[1] = 0
-        t = ci1
-        ci1 = ci2
-        ci2 = t
+    if ci1 > ci2:
+        cindex[0], cindex[1] = 1, 0
+        ci1, ci2 = ci2, ci1
     for i in range(2, n, 1):
-        ci = cflist[i] - value
+        ci = array[<unsigned int>(i)] - value
         if ci < 0:   # abs
             ci = -ci
         if ci < ci1:
-            index[1] = index[0]
-            index[0] = i
+            cindex[1] = cindex[0]
+            cindex[0] = i
             ci2 = ci1
             ci1 = ci
         elif ci < ci2:
-            index[1] = i
+            cindex[1] = i
             ci2 = ci
+    return cindex[0], cindex[1]
 
-cdef _nearest3(float *cflist, int n, float value, int *index):
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef nearest3(np.ndarray[double, ndim=1] array, double value):
+    """ return the 3 indexes of the nearest point of a numpy array of double
+    """
+    cdef int* cindex  = [0, 1, 2]
+    cdef int n = array.shape[0]
     cdef float ci, ci0, ci1, ci2
+    cdef int i
     # initialize
-    index[0] = 0
-    ci0 = cflist[0] - value
+    cindex[0] = 0
+    ci0 = array[0] - value
     if ci0 < 0:
         ci0 = -ci0
-    index[1] = 1
-    ci1 = cflist[1] - value
+    cindex[1] = 1
+    ci1 = array[1] - value
     if ci1 < 0:
         ci1 = -ci1
-    index[2] = 2
-    ci2 = cflist[2] - value
+    cindex[2] = 2
+    ci2 = array[2] - value
     if ci2 < 0:
         ci2 = -ci2
     # sort
     if ci2 < ci1:
-        t = ci1
-        ci1 = ci2
-        ci2 = t
+        cindex[1], cindex[2] = cindex[2], cindex[1]
+        ci1, ci2 = ci2, ci1
     if ci1 < ci0:
-        t = ci0
-        ci0 = ci1
-        ci1 = t
+        cindex[0], cindex[1] = cindex[1], cindex[0]
+        ci0, ci1 = ci1, ci0
     if ci2 < ci1:
-        t = ci1
-        ci1 = ci2
-        ci2 = t
+        cindex[1], cindex[2] = cindex[2], cindex[1]
+        ci1, ci2 = ci2, ci1
     for i in range(3, n, 1):
-        ci = cflist[i] - value
+        ci = array[<unsigned int>(i)] - value
         if ci < 0:
             ci = -ci
         if ci < ci0:
-            index[2] = index[1]
-            index[1] = index[0]
-            index[0] = i
+            cindex[2] = cindex[1]
+            cindex[1] = cindex[0]
+            cindex[0] = i
             ci2 = ci1
             ci1 = ci0
             ci0 = ci
         elif ci < ci1:
-            index[2] = index[1]
-            index[1] = i
+            cindex[2] = cindex[1]
+            cindex[1] = i
             ci2 = ci1
             ci1 = ci
         elif ci < ci2:
-            index[2] = i
+            cindex[2] = i
             ci2 = ci
-
-
-
-# WRAP
-def nearest1(flist, value):
-
-    # DECLARATION C VARIABLES
-    cdef float* cflist
-    cdef int* cindex 
-    cdef int n
-    n = len(flist)
-    if n > 0:
-
-        # DECLARATION C ARRAYS
-        cindex  = <int *> malloc(1*cython.sizeof(int))
-        if cindex is NULL:
-            raise MemoryError()
-
-        cflist = <float *> malloc(n*cython.sizeof(float))
-        if cflist is NULL:
-            raise MemoryError()
-
-        # INIT ARRAY
-        for i in range(n):
-            cflist[i] = flist[i]
-
-        # RUN ALGORITHM
-        _nearest1(cflist, n, value, cindex)
-        free(cflist)
-        i0 = cindex[0]
-        free(cindex)
-        
-        return i0
-    else:
-        raise Exception('Warning : list length is too short')
-
-def nearest2(flist, value):
-
-    # DECLARATION C VARIABLES
-    cdef float* cflist
-    cdef int* cindex 
-    cdef int n
-    n = len(flist)
-    if n > 0:
-
-        # DECLARATION C ARRAYS
-        cindex  = <int *> malloc(2*cython.sizeof(int))
-        if cindex is NULL:
-            raise MemoryError()
-
-        cflist = <float *> malloc(n*cython.sizeof(float))
-        if cflist is NULL:
-            raise MemoryError()
-
-        # INIT ARRAY
-        for i in range(n):
-            cflist[i] = flist[i]
-
-        # RUN ALGORITHM
-        _nearest2(cflist, n, value, cindex)
-        free(cflist)
-        i0, i1 = cindex[0], cindex[1]
-        free(cindex)
-        
-        return i0, i1
-    else:
-        raise Exception('Warning : list length is too short')
-
-def nearest3(flist, value):
-
-    # DECLARATION C VARIABLES
-    cdef float* cflist
-    cdef int* cindex 
-    cdef int n
-    n = len(flist)
-    if n > 0:
-
-        # DECLARATION C ARRAYS
-        cindex  = <int *> malloc(3*cython.sizeof(int))
-        if cindex is NULL:
-            raise MemoryError()
-
-        cflist = <float *> malloc(n*cython.sizeof(float))
-        if cflist is NULL:
-            raise MemoryError()
-
-        # INIT ARRAY
-        for i in range(n):
-            cflist[i] = flist[i]
-
-        # RUN ALGORITHM
-        _nearest3(cflist, n, value, cindex)
-        free(cflist)
-        i0, i1, i2 = cindex[0], cindex[1], cindex[2]
-        free(cindex)
-        
-        return i0, i1, i2
-    else:
-        raise Exception('Warning : list length is too short')
+    return cindex[0], cindex[1], cindex[2]
 
 

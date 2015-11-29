@@ -30,17 +30,19 @@ def interp1d(x, y, kind='linear'):
 
 
 try:
-    from fast import nearest1, nearest2, nearest3
+    from fast import _nearest1, _nearest2, _nearest3
     def interp1d(x, y, kind='linear'):
+        x = array(x, dtype=float)
+        y = array(y, dtype=float)
         def nearest(x0):
-            i0 = nearest1(x, x0)
+            i0 = _nearest1(x, x0)
 	    return y[i0]
         def linear(x0):
-            i0, i1 = nearest2(x, x0)
+            i0, i1 = _nearest2(x, x0)
             slope = (y[i1]-y[i0]) / (x[i1]-x[i0])
             return slope*x0 + y[i0] - slope*x[i0]
         def cubic(x0):
-	    i0, i1, i2 = nearest3(x, x0)
+	    i0, i1, i2 = _nearest3(x, x0)
             [x1, x2, x3] = [x[i0], x[i1], x[i2]]
             [y1, y2, y3] = [y[i0], y[i1], y[i2]]
             det = x1**2*x2 - x1**2*x3 - x1*x2**2 + x1*x3**2 + x2**2*x3 - x2*x3**2
